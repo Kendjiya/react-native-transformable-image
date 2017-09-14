@@ -55,8 +55,12 @@ export default class TransformableImage extends Component {
   componentWillReceiveProps(nextProps) {
     if (!sameSource(this.props.source, nextProps.source)) {
       //image source changed, clear last image's pixels info if any
-      this.setState({pixels: undefined, keyAcumulator: this.state.keyAcumulator + 1})
-      this.getImageSize(nextProps.source);
+      let state = {pixels: nextProps.pixels, keyAcumulator: this.state.keyAcumulator + 1}
+
+      this.setState(state)
+      if (!nextProps.pixels) {
+        this.getImageSize(nextProps.source);
+      }
     }
   }
 
